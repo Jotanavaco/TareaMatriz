@@ -66,20 +66,48 @@ class FileSystem {
   void close() {
   }
   // methods call by basic class methods
-  /* returns true if the name asked exists in 
-    the directory, otherwise returns false*/
-  bool existingName(string fileName) {
-    return true;
+  /* returns the index if the name asked exists in 
+    the directory, otherwise returns BLOCK_NOT_FOUND*/
+  int existingName(string fileName) {
+    int directoryIndex = BLOCK_NOT_FOUND;
+    bool exists = false;
+    int index = 0;
+    while (!exists && index < T_DIRECTORY) {
+      if (directory[index].fileName == fileName) {
+        directoryIndex = index;
+        exists = true;
+        index = T_DIRECTORY;
+      }
+      index++;
+    }
+    return directoryIndex;
   }
   /* returns the first block of memory from the directory,
     otherwise returns BLOCK_NOT_FOUND*/
   int searchFirstBlock(string fileName) {
-    return 0;
+    // if the block exists
+    int directoryIndex = existingName(fileName);
+    int block = BLOCK_NOT_FOUND;
+    if (directoryIndex != BLOCK_NOT_FOUND) {
+      block = directory[block].block;
+    }
+    return block;
   }
-  /* returns the index of a free block of memory,
+  /* returns the index of a free block of memory in the fatTable,
     otherwise returns FREE_MEMORY_NOT_FOUND*/
   int searchFreeBlock() {
-    return 0;
+    int freeBlockIndex = FREE_MEMORY_NOT_FOUND;
+    int index = 0;
+    bool blockFound = false;
+    while (index < T_MEMORY_UNIT && (blockFound == false)) {
+      if (fatTable[index] == FREE_BLOCK) {
+        freeBlockIndex = index;
+        blockFound = true;
+        index = T_MEMORY_UNIT;
+      }
+      index++;
+    }
+    return freeBlockIndex;
   }
   /* prints the directory*/
   void printDirectory() {
