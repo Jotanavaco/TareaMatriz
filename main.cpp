@@ -1,8 +1,6 @@
 #include <iostream>
+#include "FileSystem.hpp"
 
 int main() {
-  /*
-  Crear la matriz e inicializarla
-  
-  */
+  FileSystem *fileSystem = new FileSystem();
 }
