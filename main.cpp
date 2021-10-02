@@ -3,4 +3,5 @@
 
 int main() {
   FileSystem *fileSystem = new FileSystem();
+  fileSystem->open("holaMundo");
 }
